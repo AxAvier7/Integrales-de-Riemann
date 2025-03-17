@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\renewcommand{\abstractname}{Resumen}
+
+\title{Condición Necesaria y Suficiente de Integrabilidad}
+\author{Brioso Jurado, Adrián Xavier | Reyes García, Elisabeth}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+En el presente documento se explica la condición necesaria y suficiente de integrabilidad según Riemann.
+\end{abstract}
+
+\section{Condición Necesaria y Suficiente de Integrabilidad según Riemann}
+
+\subsection{Definición}
+Una función \(f(x)\) se dice \textit{integrable según Riemann} en un intervalo \([a,b]\) si existe el límite de las sumas integrales:
+\[
+\int_{a}^{b} f(x) \, dx = \lim_{\lambda \to 0} \sigma(P, \xi_i),
+\]
+donde \( \lambda = \max \Delta x_i \) y \( \sigma(P, \xi_i) = \sum_{i=1}^{n} f(\xi_i) \Delta x_i \).
+
+\subsection{Condiciones}
+\begin{enumerate}
+    \item \textbf{Condición necesaria:} \( f(x) \) debe ser \textbf{acotada} en \([a, b]\).
+    \begin{itemize}
+            \item Si \( f(x) \) no está acotada, las sumas integrales pueden divergir (ver demostración con funciones no acotadas).
+    \end{itemize}
+
+    \item \textbf{Condición suficiente:} \( f(x) \) es integrable si es acotada y su conjunto de discontinuidades es finito.
+    \begin{itemize}
+        \item \textbf{Ejemplo 1:} Las funciones que sean continuas en \([a, b]\) son integrables en ese intervalo.
+
+        \item \textbf{Ejemplo 2:} Las funciones con discontinuidades en un conjunto finito de puntos son integrables. Al modificar la función en  puntos aislados el valor de la integral no se ve afectado.
+
+        \item \textbf{Contraejemplo:} La función de Dirichlet no es integrable ya que es discontinua en todo el intervalo \([a, b]\).
+
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Demostraciones y Ejemplos}
+\begin{itemize}
+    \item \textbf{Función constante:} \( f(x) = c \) es integrable en \([a, b]\),
+    y \[
+    \int_{a}^{b} c \, dx = c(b-a).
+    \]
+
+    \item \textbf{Función no nula en un punto:} Si \( f(x) = 0 \) excepto en un punto, entonces \( \int_{a}^{b} f(x) dx = 0 \). Esto se puede ampliar a un número finito de puntos.  
+
+    \item \textbf{Función de Dirichlet:}
+    \[
+    D(x) =
+    \begin{cases}
+        0, & x \in \mathbb{R} \setminus \mathbb{Q} \\
+        1, & x \in \mathbb{Q}
+    \end{cases}
+    \]
+    No es integrable en ningún \( [a, b] \) ya que las sumas integrales alternan entre \(0\) y \( b -a \).
+\end{itemize}
+
+\subsection*{Conclusiones}
+La \textbf{integrabilidad según Riemann} requiere: 
+\[
+\boxed{
+    \parbox{8cm}{
+            \centering
+            \( f(x) \) es integrable en \([a, b]\) \\[0.5em]
+            \(\iff\) \\[0.5em]
+            \( f(x) \) es acotada y presenta una cantidad finita de discontinuidades.
+    }
+}
+\]
+
+\end{document}
