@@ -12,7 +12,7 @@ a = 0
 b = 4 
 
 #iniciar con un rectángulo
-n = 1
+n = 100
 
 #la figura y el eje creados
 fig, ax = plt.subplots()
