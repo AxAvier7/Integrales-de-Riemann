@@ -1,7 +1,13 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newtheorem{teorema}{Teorema}
+\newtheorem{definición}{Definición}
+\newtheorem{ejemplo}{Ejemplo}
 \renewcommand{\abstractname}{Resumen}
+\renewcommand{\proofname}{Demostración}
 
 \title{Condición Necesaria y Suficiente de Integrabilidad}
 \author{Brioso Jurado, Adrián Xavier | Reyes García, Elisabeth}
@@ -21,55 +27,205 @@ Una función \(f(x)\) se dice \textit{integrable según Riemann} en un intervalo
 \[
 \int_{a}^{b} f(x) \, dx = \lim_{\lambda \to 0} \sigma(P, \xi_i),
 \]
-donde \( \lambda = \max \Delta x_i \) y \( \sigma(P, \xi_i) = \sum_{i=1}^{n} f(\xi_i) \Delta x_i \).
+donde \( \lambda = \max \Delta x_i \) y \( \sigma(P, \xi_i) = \sum_{i=1}^{n} f(\xi_i) \Delta x_i \).\\
+
+De igual forma, se puede definir la integrabilidad mediante las \textbf{sumas de Darboux}:
+\begin{itemize}
+    \item \textbf{Suma superior de Darboux:} \( S(P, f) = \sum_{i=1}^{n} M_i \Delta x_i \), donde \( M_i = \sup \{f(x) \mid x \in [x_{i-1}, x_i]\} \).
+    \item \textbf{Suma inferior de Darboux:} \( s(P, f) = \sum_{i=1}^{n} m_i \Delta x_i \), donde \( m_i = \inf \{f(x) \mid x \in [x_{i-1}, x_i]\} \).
+\end{itemize}
+Se puede decir entonces que una función \textit{f} es Riemann integrable si:
+\[
+f \in \mathbb{R}[a,b] \iff \forall \epsilon>0: S(f,P) - s(f,P)< \epsilon \iff \underline{I} = \overline{I}
+\]\\
+
+Por tanto,
+\[
+\int_a^b f = \lim_{\left\{ P \right\}} S(f,P) = \lim_{\left\{ P \right\}} s(f,P)
+\]
 
 \subsection{Condiciones}
 \begin{enumerate}
     \item \textbf{Condición necesaria:} \( f(x) \) debe ser \textbf{acotada} en \([a, b]\).
-    \begin{itemize}
-            \item Si \( f(x) \) no está acotada, las sumas integrales pueden divergir (ver demostración con funciones no acotadas).
-    \end{itemize}
-
+        \begin{proof}
+            Sea \( f \) continua en \([a, b]\). Por el \textbf{Teorema de Heine-Cantor}, \( f \) es uniformemente continua en \([a, b]\). Dado \( \epsilon > 0 \), existe \( \delta > 0 \) tal que:
+            \[
+            |x - y| < \delta \implies |f(x) - f(y)| < \epsilon.
+            \]
+            Consideremos una partición \( P \) de \([a, b]\) con \( \lambda = \max \Delta x_i < \delta \). Para las sumas de Darboux:
+            \[
+            S(f, P) - s(f, P) = \sum_{i=1}^n (M_i - m_i) \Delta x_i,
+            \]
+            donde \( M_i = \sup f \) y \( m_i = \inf f \) en \([x_{i-1}, x_i]\). Por continuidad uniforme:
+            \[
+            M_i - m_i < \frac{\epsilon}{b-a} \quad \forall i.
+            \]
+            Luego:
+            \[
+            S(f, P) - s(f, P) < \epsilon.
+            \]
+            Como \( \epsilon \) es arbitrario, \( \lim_{\lambda \to 0} (S - s) = 0 \). Por tanto, \( f \) es integrable.
+            \end{proof}
+    
     \item \textbf{Condición suficiente:} \( f(x) \) es integrable si es acotada y su conjunto de discontinuidades es finito.
     \begin{itemize}
-        \item \textbf{Ejemplo 1:} Las funciones que sean continuas en \([a, b]\) son integrables en ese intervalo.
+        \item \textbf{Condición 1:} Las funciones que sean continuas en \([a, b]\) son integrables en ese intervalo.
+            \begin{proof}
+                Sea \( f \) continua en \([a, b]\). Por el \textbf{Teorema de Heine-Cantor}, \( f \) es uniformemente continua. Dado \( \epsilon > 0 \), existe \( \delta > 0 \) tal que:
+                \[
+                |x - y| < \delta \implies |f(x) - f(y)| < \frac{\epsilon}{b-a}
+                \]
+                Para una partición \( P \) con \( \lambda < \delta \), en cada subintervalo \([x_{i-1}, x_i]\):
+                \[
+                M_i - m_i < \frac{\epsilon}{b-a}
+                \]
+                Luego:
+                \[
+                S(P,f) - s(P,f) = \sum_{i=1}^n (M_i - m_i)\Delta x_i < \epsilon
+                \]
+                Como \( \epsilon \) es arbitrario, \( f \) es integrable.
+            \end{proof}
+            
+        \item \textbf{Condición 2:} Toda función monótona en \([a, b]\) es integrable.
+            \begin{proof}
+                Sea \( f \) monótona creciente en \([a, b]\) (análogo para funciones decrecientes). Por ser monótona, \( f \) está acotada (\( f(a) \leq f(x) \leq f(b) \)). Dado \( \epsilon > 0 \), consideremos una partición \( P \) de \([a, b]\) en \( n \) subintervalos de igual longitud \( \Delta x = \frac{b - a}{n} \). 
 
-        \item \textbf{Ejemplo 2:} Las funciones con discontinuidades en un conjunto finito de puntos son integrables. Al modificar la función en  puntos aislados el valor de la integral no se ve afectado.
+                Para las sumas de Darboux:
+                \[
+                S(P,f) - s(P,f) = \sum_{i=1}^n \left(f(x_i) - f(x_{i-1})\right)\Delta x,
+                \]
+                donde \( M_i = f(x_i) \) y \( m_i = f(x_{i-1}) \) por la monotonía. Al simplificar:
+                \[
+                \sum_{i=1}^n \left(f(x_i) - f(x_{i-1})\right) = f(b) - f(a),
+                \]
+                se obtiene:
+                \[
+                S(P,f) - s(P,f) = \Delta x \cdot \left(f(b) - f(a)\right) = \frac{(b - a)(f(b) - f(a))}{n}.
+                \]
+                
+                Despejando \( n \):
+                \[
+                \frac{(b - a)(f(b) - f(a))}{n} < \epsilon \quad \implies \quad n > \frac{(b - a)(f(b) - f(a))}{\epsilon}.
+                \]
+                Con esta \( n \), se cumple \( S(P,f) - s(P,f) < \epsilon \). Por tanto, \( f \) es integrable.
+            \end{proof}
+            
+        \item \textbf{Condición 3:} Las funciones con discontinuidades en un conjunto finito de puntos son integrables. Al modificar la función en  puntos aislados el valor de la integral no se ve afectado.
+            \begin{proof}
+                Sea \( f: [a,b] \to \mathbb{R} \) acotada con discontinuidades solo en \( \{c_1, c_2, ..., c_n\} \). Demostraremos que \( f \in \mathbb{R}[a,b] \).
 
-        \item \textbf{Contraejemplo:} La función de Dirichlet no es integrable ya que es discontinua en todo el intervalo \([a, b]\).
+                Como \( f \) es acotada, existe \( M > 0 \) tal que \( |f(x)| \leq M \) para todo \( x \in [a,b] \).
+
+                Dado \( \epsilon > 0 \), creamos una vecindad alrededor de cada discontinuidad \( c_k \):
+                \[
+                I_k = \left(c_k - \frac{\epsilon}{8nM}, c_k + \frac{\epsilon}{8nM}\right) \cap [a,b], \quad k = 1, \ldots, n.
+                \]
+                La unión de estos intervalos tiene longitud total \( \leq n \cdot \frac{\epsilon}{4nM} = \frac{\epsilon}{4M} \).
+
+                Fuera de \( \bigcup I_k \) (la unión de todas las discontinuidades), \( f \) es continua. Por el Teorema de Heine-Cantor, es uniformemente continua en el conjunto cerrado \( [a,b] \setminus \bigcup I_k \). Existe \( \delta > 0 \) tal que:
+                \[
+                |x - y| < \delta \implies |f(x) - f(y)| < \frac{\epsilon}{2(b - a)}.
+                \]
+
+                Tomemos una partición \( P \) que incluya todos los extremos de los \( I_k \) y tenga norma \( \lambda < \min\left\{\delta, \frac{\epsilon}{8nM}\right\} \).
+
+                Separamos la suma en dos partes:
+                \begin{align*}
+                    S(P,f) - s(P,f) &= \sum_{\text{subintervalos en } \bigcup I_k} (M_i - m_i)\Delta x_i + \sum_{\text{resto}} (M_i - m_i)\Delta x_i \\
+                    &\leq \sum_{\bigcup I_k} 2M \Delta x_i + \sum_{\text{resto}} \frac{\epsilon}{2(b - a)} \Delta x_i \\
+                    &\leq 2M \cdot \frac{\epsilon}{4M} + \frac{\epsilon}{2(b - a)} \cdot (b - a) \\
+                    &= \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+                \end{align*}
+
+                Si \( g \) es distinta de \( f \) solo en \( \{c_1, ..., c_m\} \), entonces \( |f - g| \neq 0 \) solo en esos puntos. Como los puntos tienen medida cero:
+                \[
+                \int_a^b |f(x) - g(x)| dx = 0 \implies \int_a^b f(x) dx = \int_a^b g(x) dx.
+                \]
+            \end{proof}
 
     \end{itemize}
 \end{enumerate}
 
-\subsection*{Demostraciones y Ejemplos}
-\begin{itemize}
-    \item \textbf{Función constante:} \( f(x) = c \) es integrable en \([a, b]\),
-    y \[
-    \int_{a}^{b} c \, dx = c(b-a).
-    \]
+\subsection*{Ejemplos de Funciones Integrables según las Condiciones Suficientes}
 
-    \item \textbf{Función no nula en un punto:} Si \( f(x) = 0 \) excepto en un punto, entonces \( \int_{a}^{b} f(x) dx = 0 \). Esto se puede ampliar a un número finito de puntos.  
+\begin{enumerate}
+    \item \textbf{Condición 1: Funciones continuas en \([a, b]\).}
+        \begin{ejemplo}
+            Sea \( f(x) = e^x \) en \([0, 1]\). Esta función es continua en todo su dominio. Por el \textbf{Teorema de Heine-Cantor}, al ser continua en un intervalo cerrado, es uniformemente continua y por tanto integrable y su integral es:
+            \[
+            \int_0^1 e^x \, dx = e - 1.
+            \]
+        \end{ejemplo}
+        
+    \item \textbf{Condición 2: Funciones monótonas en \([a, b]\).}
+        \begin{ejemplo}
+            Sea \( f: [0, 3] \to \mathbb{R} \) la función escalonada:
+            \[
+            f(x) = 
+            \begin{cases}
+                0, & 0 \leq x < 1 \\
+                2, & 1 \leq x < 2 \\
+                5, & 2 \leq x \leq 3
+            \end{cases}
+            \]
+            \( f \) es monótona creciente y tiene discontinuidades en \( x = 1 \) y \( x = 2 \). Aunque presenta saltos finitos es integrable:
+            \[
+            \int_0^3 f(x) \, dx = \int_0^1 f(x) \, dx + \int_1^2 f(x) \, dx + \int_2^3 f(x) \, dx =
+            0(1-0) + 2(2-1) + 5(3-2) = 7.
+            \]
+        \end{ejemplo}
 
-    \item \textbf{Función de Dirichlet:}
+    \item \textbf{Condición 3: Funciones con discontinuidades finitas.}
+        \begin{ejemplo}
+            Sea \( f: [0, 2] \to \mathbb{R} \) definida por:
+            \[
+            f(x) = 
+            \begin{cases}
+                0, & x \neq 1 \\
+                5, & x = 1
+            \end{cases}
+            \]
+            \( f \) es discontinua únicamente en \( x = 1 \). Como el conjunto de discontinuidades es finito, \( f \) es integrable y:
+            \[
+            \int_0^2 f(x) \, dx = 0.
+            \]
+            \begin{proof}
+                Las modificaciones en puntos aislados no afectan la integral. La función no es nula en \( x = 1 \) y por tanto tiene medida cero.
+            \end{proof}
+        \end{ejemplo}
+
+\end{enumerate}
+
+\subsection*{Contraejemplo: Función No Integrable}
+\begin{ejemplo}
+    La \textbf{función de Dirichlet} en \([0, 1]\):
     \[
-    D(x) =
+    D(x) = 
     \begin{cases}
-        0, & x \in \mathbb{R} \setminus \mathbb{Q} \\
-        1, & x \in \mathbb{Q}
+        1, & x \in \mathbb{Q} \\
+        0, & x \in \mathbb{R} \setminus \mathbb{Q}
     \end{cases}
     \]
-    No es integrable en ningún \( [a, b] \) ya que las sumas integrales alternan entre \(0\) y \( b -a \).
-\end{itemize}
+    No es integrable según Riemann, ya que es discontinua en todo el intervalo (\( \mathbb{Q} \cap [0,1] \) es denso y no tiene medida cero). Para cualquier partición \( P \):
+    \[
+    S(P,D) = 1 \quad \text{y} \quad s(P,D) = 0 \implies S - s = 1 \not< \epsilon.
+    \]
+\end{ejemplo}
 
 \subsection*{Conclusiones}
 La \textbf{integrabilidad según Riemann} requiere: 
 \[
 \boxed{
-    \parbox{8cm}{
+    \parbox{10cm}{
             \centering
             \( f(x) \) es integrable en \([a, b]\) \\[0.5em]
             \(\iff\) \\[0.5em]
-            \( f(x) \) es acotada y presenta una cantidad finita de discontinuidades.
+            \( f(x) \) es acotada en [a,b] y se cumple una de las siguientes condiciones:
+            \begin{itemize}
+                \item \(f\) es continua en \([a,b]\).
+                \item \(f\) es monótona en \([a,b]\).
+                \item \(f\) es presenta discontinuidades finitas.
+            \end{itemize}
     }
 }
 \]
